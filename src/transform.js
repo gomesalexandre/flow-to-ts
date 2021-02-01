@@ -111,6 +111,11 @@ const PrivateReactTypeNameMap = {
   React$Node: "ReactNode"
 };
 
+const ReactNameTypeMap = {
+  ...UnqualifiedReactTypeNameMap,
+  ...PrivateReactTypeNameMap
+};
+
 const transform = {
   Program: {
     enter(path, state) {
@@ -443,19 +448,21 @@ const transform = {
         }
       }
 
-      if (typeName.name in UnqualifiedReactTypeNameMap) {
+      if (typeName.name in ReactNameTypeMap) {
+        console.log({
+          name: typeName.name,
+          valWillBe: ReactNameTypeMap[typeName.name]
+        });
         // TODO: make sure that React was imported in this file
         path.replaceWith(
           t.tsTypeReference(
             t.tsQualifiedName(
               t.identifier("React"),
-              t.identifier(UnqualifiedReactTypeNameMap[typeName.name])
+              t.identifier(ReactNameTypeMap[typeName.name])
             ),
             typeParameters
           )
         );
-      } else if (typeName.name in Object.keys(PrivateReactTypeNameMap)) {
-        typeName.name = "ReadonlyArray";
       } else {
         path.replaceWith(t.tsTypeReference(typeName, typeParameters));
       }
