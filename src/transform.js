@@ -107,6 +107,10 @@ const QualifiedReactTypeNameMap = {
   // TODO: handle ComponentType, ElementConfig, ElementProps, etc.
 };
 
+const PrivateReactTypeNameMap = {
+  React$Node: "ReactNode"
+};
+
 const transform = {
   Program: {
     enter(path, state) {
@@ -450,6 +454,8 @@ const transform = {
             typeParameters
           )
         );
+      } else if (typeName.name in Object.keys(PrivateReactTypeNameMap)) {
+        typeName.name = "ReadonlyArray";
       } else {
         path.replaceWith(t.tsTypeReference(typeName, typeParameters));
       }

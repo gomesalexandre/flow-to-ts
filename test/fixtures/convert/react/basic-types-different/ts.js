@@ -1,6 +1,7 @@
 
 import * as React from "react";
 let node: React.ReactNode;
+let node: React.ReactNode;
 let text: React.ReactText;
 let child: React.ReactChild;
 let children: React.ReactChildren;
