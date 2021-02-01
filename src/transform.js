@@ -107,8 +107,14 @@ const QualifiedReactTypeNameMap = {
   // TODO: handle ComponentType, ElementConfig, ElementProps, etc.
 };
 
+// Those share the same generic signature in the flow and TS world
 const PrivateReactTypeNameMap = {
-  React$Node: "ReactNode"
+  React$Node: "ReactNode",
+  React$Element: "Element",
+  React$Portal: "ReactPortal",
+  // TODO: React$ComponentType, which has a different signature than Component<P, S>
+  React$Component: "Component",
+  React$StatelessFunctionalComponent: "FunctionComponent"
 };
 
 const ReactNameTypeMap = {
@@ -449,10 +455,6 @@ const transform = {
       }
 
       if (typeName.name in ReactNameTypeMap) {
-        console.log({
-          name: typeName.name,
-          valWillBe: ReactNameTypeMap[typeName.name]
-        });
         // TODO: make sure that React was imported in this file
         path.replaceWith(
           t.tsTypeReference(

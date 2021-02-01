@@ -9,3 +9,6 @@ let fragment: React.Fragment;
 let portal: React.Portal;
 let nodeArray: React.NodeArray;
 let element: React.Element;
+let elementPrivateType: React$Element;
+let componentPrivateType: React$Component;
+let sfcComponentPrivateType: React$StatelessFunctionalComponent
